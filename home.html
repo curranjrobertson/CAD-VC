@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="styles.css" /> 
+    <title>CAD Version Control App</title>
+	<meta name="google-site-verification" content="XAuvwD7boROOYc549erHNzLgryoa47YjzMAwkqP9hVo" />
+    <style type="text/css">
+body {
+    background-color: #1a1a1a;
+    color: #fff;
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    color: #fff;
+    font-size: 36px;
+    margin: 0 0 20px;
+  }
+  
+  input[type="text"], input[type="password"], textarea {
+    background-color: #333;
+    border: 1px solid #444;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 16px;
+    margin: 0 0 10px;
+    padding: 10px;
+    width: 100%;
+  }
+  
+  button {
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    margin: 20px 0;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  button:hover {
+    background-color: #3e8e41;
+  }
+  
+    </style>
+</head>
+<body>
+	<header>
+		<h1>CAD Version Control App</h1>
+	</header>
+	<main>
+		<section id="file-management">
+			<h2>File Management</h2>
+			<form>
+				<label for="file-name">File Name:</label>
+				<input type="text" id="file-name" name="file-name"><br>
+				<label for="file-description">File Description:</label>
+				<textarea id="file-description" name="file-description"></textarea><br>
+				<label for="file-type">File Type:</label>
+				<select id="file-type" name="file-type">
+					<option value="Part">Part</option>
+					<option value="Assembly">Assembly</option>
+					<option value="Drawing">Drawing</option>
+				</select><br>
+				<input type="submit" value="Add File">
+			</form>
+			<hr>
+			<h3>Current Files:</h3>
+			<ul>
+				<li><a href="#">Part001.sldprt</a></li>
+				<li><a href="#">Assembly001.sldasm</a></li>
+				<li><a href="#">Drawing001.slddrw</a></li>
+			</ul>
+		</section>
+		<section id="revision-management">
+			<h2>Revision Management</h2>
+			<form>
+				<label for="file-select">Select File:</label>
+				<select id="file-select" name="file-select">
+					<option value="Part001.sldprt">Part001.sldprt</option>
+					<option value="Assembly001.sldasm">Assembly001.sldasm</option>
+					<option value="Drawing001.slddrw">Drawing001.slddrw</option>
+				</select><br>
+				<label for="revision-description">Revision Description:</label>
+				<textarea id="revision-description" name="revision-description"></textarea><br>
+				<input type="submit" value="Check Out">
+				<input type="submit" value="Check In">
+			</form>
+			<hr>
+			<h3>Revision History:</h3>
+			<table>
+				<tr>
+					<th>Revision</th>
+					<th>Date</th>
+					<th>Description</th>
+					<th>Checked Out By</th>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>2022-03-01</td>
+					<td>Initial Release</td>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>2022-03-15</td>
+					<td>Added New Features</td>
+					<td>John Doe</td>
+				</tr>
+			</table>
+            <button type="button" id="lock-button" onclick="lockFile()">Lock File</button>
+            <button id="unlock-button" onclick="unlockFile()" disabled>Unlock File</button>
+            <script src="app.js"></script>
+		</section>
+	</main>
+</body>
+</html>
