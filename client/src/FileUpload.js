@@ -1,4 +1,4 @@
-/* <one line to give the program's name and a brief idea of what it does.>
+/* <.>
 Copyright (C) <2023>  <Curran Robertson> 
 
 This program is free software: you can redistribute it and/or modify
