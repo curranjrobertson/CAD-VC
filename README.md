@@ -1,5 +1,5 @@
 # CAD-file-Sharing
-This is an open-source version of a Computer Aided Design file sharing and version control desktop application. The application allows users to work simultaneously on large engineering projects that require decentralized design of systems. It also supports file sharing of large files with clients or supervisors. The application is intended to work with google cloud storage, which must be initiated by the end-user in order to save files in the cloud database. 
+This is an open-source version of a computer-aided design file sharing and version control desktop application. The application allows users to work simultaneously on large engineering projects that require decentralized design of systems. It also supports file sharing of large files with clients or supervisors. The application is intended to work with google cloud storage, which must be initiated by the end-user in order to save files in the cloud database. 
 
 
 # Installation
