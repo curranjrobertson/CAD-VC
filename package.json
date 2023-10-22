@@ -1,5 +1,5 @@
 {
-  "name": "cad-file-sharing",
+  "name": "cad-vc",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -9,12 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/curranjrobertson/CAD-file-Sharing.git"
+    "url": "git+ssh://git@github.com/curranjrobertson/CAD-VC.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/curranjrobertson/CAD-file-Sharing/issues"
+    "url": "https://github.com/curranjrobertson/CAD-VC/issues"
   },
   "homepage": "https://github.com/curranjrobertson/CAD-file-Sharing#readme",
   "dependencies": {
