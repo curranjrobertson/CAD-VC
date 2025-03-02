@@ -16,27 +16,25 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 // Importing the required modules
 import * as fs from 'fs';
 import express from 'express';
-process.env.GOOGLE_APPLICATION_CREDENTIALS = '';
+process.env.GOOGLE_APPLICATION_CREDENTIALS = ''; // add to gitignore
 import {Storage} from '@google-cloud/storage';
 import path from 'path';
 import multer from 'multer';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import nodemailer from 'nodemailer';
-// import { os } from 'node:os';
+import os from 'node:os';
 
-// constants
 const router = express();
 const port = 3001;
 const storage = new Storage();
 let bucketName = null;
 const file = 'drawing.html';
-const filePath = "./documents/drawing.html";
-const lock_File = "./documents/drawing.html";
+const documentsFilePath = path.join(os.homedir(), 'Documents');
 const __dirname = path.resolve();
-// const homeDir = os.homedir();
-// const desktopDir = `${homeDir}/Desktop`;
-// console.log(desktopDir);
+const homeDir = os.homedir();
+const desktopDir = `${homeDir}/Desktop`;
+console.log(desktopDir);
 
 router.use(cors({
   origin: '*'
@@ -90,25 +88,22 @@ router.post('/adduser', async (req, res) => {
     const bucket = storage.bucket(bucketName);
     console.log('Bucket Name: ', bucketName);
 
-    // Get the current IAM policy of the bucket
     const [policy] = await bucket.iam.getPolicy({ requestedPolicyVersion: 3 });
     console.log('Current IAM Policy: ', policy)
 
-    // Add the user's email to the policy with a desired role
+
     const updatedBindings = [
       ...policy.bindings,
       {
-        role: 'roles/storage.objectAdmin', // Modify the appropriate role as needed
-        members: [`user:${userEmail}`] // Add the user with the provided email
+        role: 'roles/storage.objectAdmin', 
+        members: [`user:${userEmail}`] 
       }
     ];
 
-    // Update the policy with the new bindings
     const updatedIamPolicy = {
       bindings: updatedBindings
     };
 
-    // Set the updated policy for the bucket
     await bucket.iam.setPolicy(updatedIamPolicy);
 
     console.log(`User ${userEmail} added to bucket ${bucketName} with objectAdmin role.`);
@@ -174,11 +169,11 @@ router.post('/folderSync', async (req, res) => {
     const filePath = folderName + '/';
     console.log("FilePath: ", filePath);
 
-    const localFolderPath = './documents/' + folderName + '/'; // Specify the local folder path
+    const localFolderPath = documentsFilePath + '/' + 'CAD-VC' + '/' + bucketName + '/' + folderName + '/'; 
 
-    fs.mkdirSync(localFolderPath, { recursive: true }); // Create the local folder if it doesn't exist
+    fs.mkdirSync(localFolderPath, { recursive: true }); 
 
-    const [cloudFiles] = await bucket.getFiles({ prefix: filePath }); // Get cloud files
+    const [cloudFiles] = await bucket.getFiles({ prefix: filePath }); 
 
     for (const cloudFile of cloudFiles) {
       const localFileName = path.basename(cloudFile.name);
@@ -187,10 +182,10 @@ router.post('/folderSync', async (req, res) => {
       try {
         const localStat = fs.existsSync(localFilePath) ? fs.statSync(localFilePath) : null;
         const cloudUpdatedTimestamp = new Date(cloudFile.metadata.updated);
-        const timestampThreshold = 1000; // Threshold in milliseconds
+        const timestampThreshold = 1000; 
 
         if (localStat) {
-          const localTimestamp = localStat.mtime.getTime(); // Convert to timestamp in milliseconds
+          const localTimestamp = localStat.mtime.getTime();
           console.log('Local Time Stamp: ', localStat.mtime.getTime());
           const cloudTimestamp = new Date(cloudUpdatedTimestamp).getTime();
           console.log('Cloud Time Stamp: ', cloudTimestamp);
@@ -301,11 +296,9 @@ router.post('/lockfolder', async (req, res) => {
     console.log("Received folder name: ", folderName);
     const retentionPeriod = 3600;
 
-    // Turn off versioning
     const versioning = await storage.bucket(bucketName).setMetadata({versioning: {enabled: false}});
     console.log(`Versioning is enabled for bucket ${bucketName}`);
 
-    // Construct the folder path
     const folderPath = folderName + '/';
     const [metadata] = await storage.bucket(bucketName).setRetentionPeriod(retentionPeriod);
     console.log(`Bucket ${bucketName} retention period set for ${metadata.retentionPolicy.retentionPeriod} seconds.`);
@@ -322,7 +315,6 @@ router.post('/unlockfolder', async (req, res) => {
     const folderName = req.body.folderName;
     console.log("Received folder name: ", folderName);
 
-    // Construct the folder path
     const folderPath = folderName + '/';
     const [metaData] = await storage.bucket(bucketName).getMetadata();
     console.log(metaData)
