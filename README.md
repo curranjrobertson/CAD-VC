@@ -26,3 +26,6 @@ Run the node backend
 cd to CAD-file-Sharing
 run the following commands:
 node app.js
+# Donate
+Donate to this Project here:
+https://www.paypal.com/donate/?hosted_button_id=MTHE5XG8EAWGW
